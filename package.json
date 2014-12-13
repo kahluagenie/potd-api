@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Oleg Kalugin",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "cheerio": "^0.18.0",
     "hapi": "^8.0.0",
