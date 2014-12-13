@@ -3,23 +3,7 @@ const cheerio = require('cheerio');
 
 const GOPRO_URL = 'https://gopro.com/photos/photo-of-the-day/';
 
-exports.register = function (server, options, next) {
-    server.route({
-        method: 'GET',
-        path: '/potd/gopro',
-        handler: function (request, reply) {
-            requestPhoto(reply);
-        }
-    });
-
-    next();
-};
-
-exports.register.attributes = {
-    pkg: require('./package.json')
-};
-
-function requestPhoto(reply) {
+module.exports = function (request, reply) {
     var date = new Date();
     var url = GOPRO_URL + date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
 
@@ -41,7 +25,7 @@ function requestPhoto(reply) {
             });
         }
     });
-}
+};
 
 function trim(text, stringToTrim) {
     var result = text.toString();

@@ -2,18 +2,13 @@ var Hapi = require('hapi');
 
 // Create a server with a host and port
 var server = new Hapi.Server();
-var port =  process.env.PORT || 8000;
+var port = process.env.PORT || 8000;
 server.connection({
     host: 'localhost',
     port: port
 });
 
-// load one plugin
-server.register(require('./parser'), function (err) {
-    if (err) {
-        console.error('Failed to load plugin:', err);
-    }
-});
+server.route(require('./potd'));
 
 // Start the server
 server.start();
