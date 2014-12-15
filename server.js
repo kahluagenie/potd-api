@@ -8,7 +8,7 @@ server.connection({
     port: port
 });
 
-server.route(require('./routes'));
+server.route(require('./config/routes'));
 
 // Start the server
 server.start();
