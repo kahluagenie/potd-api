@@ -8,7 +8,7 @@ server.connection({
     port: port
 });
 
-server.route(require('./potd'));
+server.route(require('./routes'));
 
 // Start the server
 server.start();

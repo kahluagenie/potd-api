@@ -1,8 +1,6 @@
-var root = '/potd';
-
 module.exports = {
     method: 'GET',
-    path: root + '/gopro',
+    path: '/gopro',
     config: {
         handler: require('./controller/gopro')
     }
