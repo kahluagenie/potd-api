@@ -7,11 +7,13 @@ const GOPRO_URL = 'https://gopro.com/photos/photo-of-the-day/';
 var cache = require('../cache');
 
 module.exports = function (request, reply) {
-    var date = new Date();
-    var url = GOPRO_URL + formatDate(date, '/');
+    var date = request.params.date ?
+        new Date(Date.parse(encodeURIComponent(request.params.date)))
+        : new Date();
+    var url = GOPRO_URL + date.toCustomString('/');
 
-    var key = formatDate(date, '-');
-    var cacheEntry = cache.get(key);
+    var cacheKey = date.toCustomString();
+    var cacheEntry = cache.get(cacheKey);
 
     if (cacheEntry) {
         reply(cacheEntry);
@@ -28,14 +30,10 @@ module.exports = function (request, reply) {
                 byline = byline.replace('\n', ' ');
 
                 var photo = new Photo(uri, title, byline);
-                cache.put(key, photo);
+                cache.put(cacheKey, photo);
 
                 reply(photo);
             }
         });
     }
 };
-
-function formatDate(date, separator) {
-    return date.getFullYear() + separator + (date.getMonth() + 1) + separator + date.getDate();
-}

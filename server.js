@@ -43,5 +43,12 @@ function enhanceStringPrototype() {
         }
 
         return result;
+    };
+
+    Date.prototype.toCustomString = function (separator) {
+        if (!separator) {
+            separator = '-';
+        }
+        return this.getUTCFullYear() + separator + (this.getUTCMonth() + 1) + separator + this.getUTCDate();
     }
 }

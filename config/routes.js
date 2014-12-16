@@ -8,7 +8,7 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: endpoints.gopro,
+        path: endpoints.gopro + '/{date?}',
         handler: require('../controller/gopro')
     }
 ];

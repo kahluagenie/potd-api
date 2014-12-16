@@ -1,6 +1,7 @@
 /**
  * Cache for storing just two values:
  * today and tomorrow (because of time zone differences).
+ * Those will be the majority of use cases.
  */
 
 var cache = {
@@ -21,14 +22,14 @@ exports.get = function (key) {
 exports.put = function (key, value) {
     var date = new Date();
 
-    var today = formatDate(date);
+    var today = date.toCustomString();
     if (key === today) {
         cache.today.date = key;
         cache.today.value = value;
     }
 
-    date.setDate(date.getDate + 1);
-    var tomorrow = formatDate(date);
+    date.setDate(date.getDate() + 1);
+    var tomorrow = date.toCustomString();
     if (key === tomorrow) {
         cache.tomorrow.date = key;
         cache.tomorrow.value = value;
@@ -38,11 +39,4 @@ exports.put = function (key, value) {
 function CacheEntry(date, value) {
     this.date = date;
     this.value = value;
-}
-
-function formatDate(date, separator) {
-    if (!separator) {
-        separator = '-';
-    }
-    return date.getFullYear() + separator + (date.getMonth() + 1) + separator + date.getDate();
 }
