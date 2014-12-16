@@ -11,9 +11,3 @@ module.exports = function (request, reply) {
         }]
     });
 };
-
-if (typeof String.prototype.endsWith !== 'function') {
-    String.prototype.endsWith = function (str) {
-        return this.slice(-str.length) === str;
-    };
-}
