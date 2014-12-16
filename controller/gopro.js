@@ -18,22 +18,26 @@ module.exports = function (request, reply) {
     if (cacheEntry) {
         reply(cacheEntry);
     } else {
-        httpRequest(url, function (error, response, html) {
-            if (!error && response.statusCode == 200) {
-                var body = cheerio.load(html);
-                var uri = body('div.span12.text-center.black-background img').attr('src').toString();
-                var title = body('title').text().replace('GoPro Photo Of The Day | ', '');
-
-                var byline = body('div.row-fluid.black-background.medium-top-padding.xxlarge-bottom-padding ' +
-                'p.gray-font.medium-bottom-margin').text();
-                byline = byline.trimSequence('\n');
-                byline = byline.replace('\n', ' ');
-
-                var photo = new Photo(uri, title, byline);
-                cache.put(cacheKey, photo);
-
-                reply(photo);
-            }
-        });
+        getPhoto(url, cacheKey, reply);
     }
 };
+
+function getPhoto(url, cacheKey, reply) {
+    httpRequest(url, function (error, response, html) {
+        if (!error && response.statusCode == 200) {
+            var body = cheerio.load(html);
+            var uri = body('div.span12.text-center.black-background img').attr('src').toString();
+            var title = body('title').text().replace('GoPro Photo Of The Day | ', '');
+
+            var byline = body('div.row-fluid.black-background.medium-top-padding.xxlarge-bottom-padding ' +
+            'p.gray-font.medium-bottom-margin').text();
+            byline = byline.trimSequence('\n');
+            byline = byline.replace('\n', ' ');
+
+            var photo = new Photo(uri, title, byline);
+            cache.put(cacheKey, photo);
+
+            reply(photo);
+        }
+    });
+}
