@@ -40,8 +40,10 @@ function parseGoproWebpage(html) {
 
     var byline = body('div.row-fluid.black-background.medium-top-padding.xxlarge-bottom-padding ' +
     'p.gray-font.medium-bottom-margin').text();
-    byline = byline.trimSequence('\n');
+    byline = byline.trim();
+    byline = byline.replace('\r\n', ' ');
     byline = byline.replace('\n', ' ');
+    byline = byline.replace(/\s{2,}/g, ' ');
 
     return new Photo(uri, title, byline);
 }

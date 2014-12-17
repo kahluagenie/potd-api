@@ -1,4 +1,5 @@
 const Hapi = require('hapi');
+const enhancePrototypes = require('./config/extend-prototypes');
 
 // Create a server with a host and port
 var server = new Hapi.Server();
@@ -10,45 +11,6 @@ server.connection({
 
 server.route(require('./config/routes'));
 
-var cache = require('./cache');
-
-enhanceStringPrototype();
+enhancePrototypes();
 
 server.start();
-
-
-// ==========
-
-function enhanceStringPrototype() {
-    if (typeof String.prototype.startsWith !== 'function') {
-        String.prototype.startsWith = function (str) {
-            return this.slice(0, str.length) === str;
-        };
-    }
-
-    if (typeof String.prototype.endsWith !== 'function') {
-        String.prototype.endsWith = function (str) {
-            return this.slice(-str.length) === str;
-        };
-    }
-
-    String.prototype.trimSequence = function (stringToTrim) {
-        var result = this.toString();
-        if (result.startsWith(stringToTrim)) {
-            result = result.replace(stringToTrim, '');
-        }
-
-        if (result.endsWith(stringToTrim)) {
-            result = result.slice(0, result.length - stringToTrim.length);
-        }
-
-        return result;
-    };
-
-    Date.prototype.toCustomString = function (separator) {
-        if (!separator) {
-            separator = '-';
-        }
-        return this.getUTCFullYear() + separator + (this.getUTCMonth() + 1) + separator + this.getUTCDate();
-    }
-}
