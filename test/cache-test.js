@@ -23,7 +23,7 @@ describe('cache', function () {
     });
 
     it('should not store yesterday\'s photo', function (done) {
-        assertCacheStoresYesterdaysPhoto();
+        assertCacheDoesNotStoreYesterdaysPhoto();
         done();
     });
 });
@@ -48,7 +48,7 @@ function assertCacheStoresTomorrowsPhoto() {
     assertCacheStoresMockValue(tomorrow.toCustomString());
 }
 
-function assertCacheStoresYesterdaysPhoto() {
+function assertCacheDoesNotStoreYesterdaysPhoto() {
     var yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
     assertCacheDoesNotStoreMockValue(yesterday.toCustomString());
