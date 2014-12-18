@@ -1,3 +1,5 @@
+/*jshint esnext: true*/
+
 const Hapi = require('hapi');
 const enhancePrototypes = require('./config/extend-prototypes');
 

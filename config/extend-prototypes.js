@@ -16,5 +16,5 @@ module.exports = function () {
             separator = '-';
         }
         return this.getUTCFullYear() + separator + (this.getUTCMonth() + 1) + separator + this.getUTCDate();
-    }
+    };
 };

@@ -30,7 +30,7 @@ function getPhoto(url, cacheKey, reply) {
             throw error;
         }
 
-        if (response.statusCode == 200) {
+        if (response.statusCode === 200) {
             var photo = parseGoproWebpage(html);
             cache.put(cacheKey, photo);
 

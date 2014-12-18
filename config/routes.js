@@ -1,3 +1,5 @@
+/*jshint esnext: true*/
+
 const endpoints = require('./endpoints');
 
 module.exports = [
