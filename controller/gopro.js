@@ -26,11 +26,17 @@ module.exports = function (request, reply) {
 
 function getPhoto(url, cacheKey, reply) {
     httpRequest(url, function (error, response, html) {
-        if (!error && response.statusCode == 200) {
+        if (error) {
+            throw error;
+        }
+
+        if (response.statusCode == 200) {
             var photo = parseGoproWebpage(html);
             cache.put(cacheKey, photo);
 
             reply(photo);
+        } else {
+            reply('Error retrieving the image from GoPro', null);
         }
     });
 }
