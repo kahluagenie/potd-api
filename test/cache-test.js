@@ -30,6 +30,11 @@ describe('cache', function () {
         assertCacheDoesNotStoreYesterdaysPhoto();
         done();
     });
+
+    it('should empty itself on clear command', function (done) {
+        testCacheClear();
+        done();
+    });
 });
 
 function assertCacheStoresTodaysPhoto() {
@@ -64,5 +69,14 @@ function assertCacheDoesNotStoreMockValue(dateKey) {
 
     cache.put(dateKey, mockPhoto);
     cacheValue = cache.get(dateKey);
+    assert.equal(cacheValue, null);
+}
+
+function testCacheClear() {
+    var today = new Date().toCustomString();
+    cache.put(today, mockPhoto);
+
+    cache.clear();
+    var cacheValue = cache.get(today);
     assert.equal(cacheValue, null);
 }
