@@ -1,3 +1,5 @@
+/*jshint esnext: true*/
+
 const httpRequest = require('request');
 const cheerio = require('cheerio');
 const Photo = require('../model/Photo');
