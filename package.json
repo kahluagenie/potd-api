@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/istanbul test ./node_modules/mocha/bin/_mocha -- -R spec"
   },
   "author": "Oleg Kalugin",
   "license": "MIT",
@@ -12,5 +12,13 @@
     "cheerio": "^0.18.0",
     "hapi": "^8.0.0",
     "request": "^2.51.0"
+  },
+  "devDependencies": {
+    "istanbul": "^0.3.5",
+    "mocha": "^2.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kahluagenie/potd-api"
   }
 }
