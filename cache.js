@@ -9,6 +9,11 @@ var cache = {
     tomorrow: new CacheEntry()
 };
 
+function CacheEntry(date, value) {
+    this.date = date;
+    this.value = value;
+}
+
 exports.get = function (key) {
     if (key === cache.today.date) {
         return cache.today.value;
@@ -36,7 +41,9 @@ exports.put = function (key, value) {
     }
 };
 
-function CacheEntry(date, value) {
-    this.date = date;
-    this.value = value;
-}
+exports.clear = function () {
+    cache = {
+        today: new CacheEntry(),
+        tomorrow: new CacheEntry()
+    };
+};

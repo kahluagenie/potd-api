@@ -11,6 +11,10 @@ var cache = require('../cache');
 
 enhancePrototypes();
 
+beforeEach(function () {
+    cache.clear();
+});
+
 describe('cache', function () {
     it('should store today\'s photo', function (done) {
         assertCacheStoresTodaysPhoto();
