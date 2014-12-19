@@ -9,36 +9,41 @@ var cache = require('../cache');
 enhancePrototypes();
 
 var mockHtmlFile, mockPhoto, goproUrl;
-
 setupMocks();
 
-fs.readFile(mockHtmlFile, function (err, html) {
-    if (err) {
-        throw err;
-    }
+describe('gopro controller', function () {
+    var html;
+
+    before(function (done) {
+        fs.readFile(mockHtmlFile, function (err, mockHtml) {
+            if (err) {
+                throw err;
+            }
+            html = mockHtml;
+            done();
+        });
+    });
 
     beforeEach(function () {
         cache.clear();
     });
 
-    describe('gopro controller', function () {
-        it('should return correct photo on the first and subsequent calls', function (done) {
-            mockSuccessGoproCall(html);
-            assertGoproControllerReturnsCorrectPhoto(function () {
-                assertGoproControllerReturnsCorrectPhoto(done);
-            });
+    it('should return correct photo on the first and subsequent calls', function (done) {
+        mockSuccessGoproCall(html);
+        assertGoproControllerReturnsCorrectPhoto(function () {
+            assertGoproControllerReturnsCorrectPhoto(done);
         });
+    });
 
-        it('should return correct photo with date param', function (done) {
-            var date = '2014-12-17';
-            mockSuccessGoproCall(html, date);
-            assertGoproControllerReturnsCorrectPhoto(done, date);
-        });
+    it('should return correct photo with date param', function (done) {
+        var date = '2014-12-17';
+        mockSuccessGoproCall(html, date);
+        assertGoproControllerReturnsCorrectPhoto(done, date);
+    });
 
-        it('should return null when cache is empty and network call fails', function (done) {
-            mockFailGoproCall();
-            assertGoproControllerReturnsNullOnFailedNetworkCall(done);
-        });
+    it('should return null when cache is empty and network call fails', function (done) {
+        mockFailGoproCall();
+        assertGoproControllerReturnsNullOnFailedNetworkCall(done);
     });
 });
 
