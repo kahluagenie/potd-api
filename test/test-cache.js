@@ -1,5 +1,5 @@
 const assert = require('assert');
-const enhancePrototypes = require('../config/extend-prototypes');
+const enhancePrototypes = require('../app/config/extend-prototypes');
 
 const mockPhoto = {
     uri: 'http://cbcdn2.gp-static.com/uploads/photo_of_the_day/image/135179/full_height2x_G0027451.jpg',
@@ -7,7 +7,7 @@ const mockPhoto = {
     byline: 'by Yogev Kalmanovich'
 };
 
-var cache = require('../cache');
+var cache = require('../app/util/cache');
 
 enhancePrototypes();
 

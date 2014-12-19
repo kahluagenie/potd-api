@@ -1,4 +1,4 @@
-const homeController = require('../controller/home');
+const homeController = require('../app/controller/home');
 const assert = require('chai').assert;
 const expect = require('chai').expect;
 

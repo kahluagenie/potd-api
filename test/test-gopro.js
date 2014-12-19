@@ -1,10 +1,10 @@
-const goproController = require('../controller/gopro');
+const goproController = require('../app/controller/gopro');
 const nock = require('nock');
 const assert = require('assert');
 const fs = require('fs');
-const enhancePrototypes = require('../config/extend-prototypes');
+const enhancePrototypes = require('../app/config/extend-prototypes');
 
-var cache = require('../cache');
+var cache = require('../app/util/cache');
 
 enhancePrototypes();
 
