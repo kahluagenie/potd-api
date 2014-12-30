@@ -1,8 +1,8 @@
-const goproController = require('../app/controller/gopro');
-const nock = require('nock');
-const assert = require('assert');
-const fs = require('fs');
-const enhancePrototypes = require('../app/config/extend-prototypes');
+var goproController = require('../app/controller/gopro'),
+    nock = require('nock'),
+    assert = require('assert'),
+    fs = require('fs'),
+    enhancePrototypes = require('../app/config/extend-prototypes');
 
 var cache = require('../app/util/cache');
 
@@ -73,6 +73,12 @@ function assertGoproControllerReturnsCorrectPhoto(done, date) {
     };
 
     goproController(request, function (photo) {
+        if (date) {
+            mockPhoto.source = goproUrl + date.replace(/-/g, '/');
+        } else {
+            mockPhoto.source = goproUrl + new Date().toCustomString('/');
+        }
+
         assert.deepEqual(photo, mockPhoto);
         done();
     });
