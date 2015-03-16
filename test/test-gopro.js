@@ -5,11 +5,8 @@ var assert = require('assert');
 var fs = require('fs');
 var Sinon = require('sinon');
 var goproController = require('../app/controller/gopro');
-var enhancePrototypes = require('../app/config/extend-prototypes');
-
 var cache = require('../app/util/cache');
 
-enhancePrototypes();
 
 var mockGoproResponseFile, mockPhoto;
 setupMocks();

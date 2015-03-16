@@ -1,7 +1,6 @@
 'use strict';
 
 var assert = require('assert');
-var enhancePrototypes = require('../app/config/extend-prototypes');
 var DateUtil = require('../app/util/DateUtil');
 
 var mockPhoto = {
@@ -12,7 +11,6 @@ var mockPhoto = {
 
 var cache = require('../app/util/cache');
 
-enhancePrototypes();
 
 beforeEach(function () {
     cache.clear();

@@ -1,9 +1,7 @@
-/*jshint esnext: true*/
+'use strict';
 
-const Hapi = require('hapi');
-const enhancePrototypes = require('./app/config/extend-prototypes');
+var Hapi = require('hapi');
 
-// Create a server with a host and port
 var server = new Hapi.Server();
 var port = process.env.PORT || 8000;
 server.connection({
@@ -12,7 +10,5 @@ server.connection({
 });
 
 server.route(require('./app/config/routes'));
-
-enhancePrototypes();
 
 server.start();
