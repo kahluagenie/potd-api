@@ -3,7 +3,15 @@
 function DateUtil() {
 }
 
-DateUtil.toUTCDateString = function (date, separator) {
+DateUtil.toCustomDateString = function (date, separator) {
+    if (!separator) {
+        separator = '-';
+    }
+    return date.getFullYear() + separator + (date.getMonth() + 1) + separator + date.getDate();
+};
+
+
+DateUtil.toCustomUTCDateString = function (date, separator) {
     if (!separator) {
         separator = '-';
     }

@@ -31,14 +31,14 @@ exports.get = function (key) {
 exports.put = function (key, value) {
     var date = new Date();
 
-    var today = DateUtil.toUTCDateString(date);
+    var today = DateUtil.toCustomDateString(date);
     if (key === today) {
         cache.today.date = key;
         cache.today.value = value;
     }
 
     date.setDate(date.getDate() + 1);
-    var tomorrow = DateUtil.toUTCDateString(date);
+    var tomorrow = DateUtil.toCustomDateString(date);
     if (key === tomorrow) {
         cache.tomorrow.date = key;
         cache.tomorrow.value = value;

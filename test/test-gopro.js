@@ -38,7 +38,7 @@ describe('gopro controller', function () {
     });
 
     it('should return correct photo on the first and subsequent calls', function (done) {
-        Sinon.useFakeTimers(new Date(2015, 0, 25).getTime());
+        sandbox.useFakeTimers(new Date(2015, 0, 25, 20).getTime());
         mockSuccessfulGoproCall(goproResponse);
         assertGoproControllerReturnsCorrectPhoto(function () {
             assertGoproControllerReturnsCorrectPhoto(done);

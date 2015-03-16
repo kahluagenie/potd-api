@@ -41,7 +41,7 @@ describe('cache', function () {
 });
 
 function assertCacheStoresTodayPhoto() {
-    var today = DateUtil.toUTCDateString(new Date());
+    var today = DateUtil.toCustomUTCDateString(new Date());
     assertCacheStoresMockValue(today);
 }
 
@@ -57,13 +57,13 @@ function assertCacheStoresMockValue(dateKey) {
 function assertCacheStoresTomorrowsPhoto() {
     var tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    assertCacheStoresMockValue(DateUtil.toUTCDateString(tomorrow));
+    assertCacheStoresMockValue(DateUtil.toCustomDateString(tomorrow));
 }
 
 function assertCacheDoesNotStoreYesterdaysPhoto() {
     var yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    assertCacheDoesNotStoreMockValue(DateUtil.toUTCDateString(yesterday));
+    assertCacheDoesNotStoreMockValue(DateUtil.toCustomDateString(yesterday));
 }
 
 function assertCacheDoesNotStoreMockValue(dateKey) {
@@ -76,7 +76,7 @@ function assertCacheDoesNotStoreMockValue(dateKey) {
 }
 
 function testCacheClear() {
-    var today = DateUtil.toUTCDateString(new Date());
+    var today = DateUtil.toCustomDateString(new Date());
     cache.put(today, mockPhoto);
 
     cache.clear();

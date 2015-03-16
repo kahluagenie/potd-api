@@ -8,11 +8,16 @@ var DateUtil = require('../util/DateUtil');
 exports.GOPRO_URL = 'https://api.gopro.com/v2/channels/feed/playlists/photo-of-the-day?platform=web';
 
 exports.getPicture = function (request, reply) {
-    var date = request.params.date ?
-        new Date(Date.parse(decodeURIComponent(request.params.date)))
-        : new Date();
+    var date;
 
-    var cacheKey = DateUtil.toUTCDateString(date);
+    if (request.params.date) {
+        date = new Date(Date.parse(decodeURIComponent(request.params.date)));
+    } else {
+        var now = new Date();
+        date = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+    }
+
+    var cacheKey = DateUtil.toCustomUTCDateString(date);
     var cacheEntry = cache.get(cacheKey);
 
     if (cacheEntry) {
@@ -35,7 +40,7 @@ function getPhoto(cacheKey, date, reply) {
             goproApiResponse.media.some(function (photoItem) {
                 var responseDate = new Date(Date.parse(photoItem.date));
 
-                if (DateUtil.toUTCDateString(date) === DateUtil.toUTCDateString(responseDate)) {
+                if (DateUtil.toCustomUTCDateString(date) === DateUtil.toCustomUTCDateString(responseDate)) {
                     var uri = photoItem.thumbnails.full.image;
                     var title = photoItem.title;
                     var byline = 'by ' + photoItem.author;
