@@ -67,12 +67,10 @@ function getPhoto(cacheKey, date, reply) {
 }
 
 function buildPhoto(responsePhoto) {
-    var photo = new Photo(
+    return new Photo(
         responsePhoto.thumbnails.full.image,
         responsePhoto.title,
-        'by ' + responsePhoto.author
+        'by ' + responsePhoto.author,
+        'https://gopro.com/channel/photo-of-the-day/' + responsePhoto.permalink + '/'
     );
-    photo.source = 'https://gopro.com/channel/photo-of-the-day/' + responsePhoto.permalink + '/';
-
-    return photo;
 }
