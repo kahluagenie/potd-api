@@ -1,0 +1,14 @@
+{
+  "esnext": true,
+  "bitwise": true,
+  "camelcase": true,
+  "curly": true,
+  "eqeqeq": true,
+  "globalstrict": true,
+  "latedef": "nofunc",
+  "mocha": true,
+  "noarg": true,
+  "node": true,
+  "undef": true,
+  "unused": true
+}

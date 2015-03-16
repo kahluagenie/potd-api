@@ -1,7 +1,10 @@
-const assert = require('assert');
-const enhancePrototypes = require('../app/config/extend-prototypes');
+'use strict';
 
-const mockPhoto = {
+var assert = require('assert');
+var enhancePrototypes = require('../app/config/extend-prototypes');
+var DateUtil = require('../app/util/DateUtil');
+
+var mockPhoto = {
     uri: 'http://cbcdn2.gp-static.com/uploads/photo_of_the_day/image/135179/full_height2x_G0027451.jpg',
     title: 'Skydive over Bay of Acre Israel',
     byline: 'by Yogev Kalmanovich'
@@ -17,7 +20,7 @@ beforeEach(function () {
 
 describe('cache', function () {
     it('should store today\'s photo', function (done) {
-        assertCacheStoresTodaysPhoto();
+        assertCacheStoresTodayPhoto();
         done();
     });
 
@@ -37,8 +40,8 @@ describe('cache', function () {
     });
 });
 
-function assertCacheStoresTodaysPhoto() {
-    var today = new Date().toCustomString();
+function assertCacheStoresTodayPhoto() {
+    var today = DateUtil.toUTCDateString(new Date());
     assertCacheStoresMockValue(today);
 }
 
@@ -54,13 +57,13 @@ function assertCacheStoresMockValue(dateKey) {
 function assertCacheStoresTomorrowsPhoto() {
     var tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    assertCacheStoresMockValue(tomorrow.toCustomString());
+    assertCacheStoresMockValue(DateUtil.toUTCDateString(tomorrow));
 }
 
 function assertCacheDoesNotStoreYesterdaysPhoto() {
     var yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    assertCacheDoesNotStoreMockValue(yesterday.toCustomString());
+    assertCacheDoesNotStoreMockValue(DateUtil.toUTCDateString(yesterday));
 }
 
 function assertCacheDoesNotStoreMockValue(dateKey) {
@@ -73,7 +76,7 @@ function assertCacheDoesNotStoreMockValue(dateKey) {
 }
 
 function testCacheClear() {
-    var today = new Date().toCustomString();
+    var today = DateUtil.toUTCDateString(new Date());
     cache.put(today, mockPhoto);
 
     cache.clear();

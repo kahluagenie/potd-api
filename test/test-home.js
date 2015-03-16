@@ -1,6 +1,8 @@
-const homeController = require('../app/controller/home');
-const assert = require('chai').assert;
-const expect = require('chai').expect;
+'use strict';
+
+var homeController = require('../app/controller/home');
+var assert = require('chai').assert;
+var expect = require('chai').expect;
 
 var mockRequest = {
     info: {

@@ -10,15 +10,16 @@
   "license": "MIT",
   "dependencies": {
     "cheerio": "^0.18.0",
-    "hapi": "^8.0.0",
-    "request": "^2.51.0"
+    "hapi": "^8.4.0",
+    "request": "^2.53.0"
   },
   "devDependencies": {
-    "chai": "^1.10.0",
+    "chai": "^2.1.2",
     "codeclimate-test-reporter": "0.0.4",
-    "istanbul": "^0.3.5",
-    "mocha": "^2.0.1",
-    "nock": "^0.52.2"
+    "istanbul": "^0.3.8",
+    "mocha": "^2.2.1",
+    "nock": "^1.1.0",
+    "sinon": "^1.14.0"
   },
   "repository": {
     "type": "git",

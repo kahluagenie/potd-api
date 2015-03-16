@@ -1,3 +1,7 @@
+'use strict';
+
+var DateUtil = require('./DateUtil');
+
 /**
  * Cache for storing just two values:
  * today and tomorrow (because of time zone differences).
@@ -27,14 +31,14 @@ exports.get = function (key) {
 exports.put = function (key, value) {
     var date = new Date();
 
-    var today = date.toCustomString();
+    var today = DateUtil.toUTCDateString(date);
     if (key === today) {
         cache.today.date = key;
         cache.today.value = value;
     }
 
     date.setDate(date.getDate() + 1);
-    var tomorrow = date.toCustomString();
+    var tomorrow = DateUtil.toUTCDateString(date);
     if (key === tomorrow) {
         cache.tomorrow.date = key;
         cache.tomorrow.value = value;

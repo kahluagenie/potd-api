@@ -1,6 +1,7 @@
-/*jshint esnext: true*/
+'use strict';
 
-const endpoints = require('./endpoints');
+var endpoints = require('./endpoints');
+var Gopro = require('../controller/gopro');
 
 module.exports = [
     {
@@ -11,6 +12,6 @@ module.exports = [
     {
         method: 'GET',
         path: endpoints.gopro + '/{date?}',
-        handler: require('../controller/gopro')
+        handler: Gopro.getPicture
     }
 ];

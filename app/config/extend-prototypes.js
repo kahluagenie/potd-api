@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function () {
     if (typeof String.prototype.startsWith !== 'function') {
         String.prototype.startsWith = function (str) {
@@ -10,11 +12,4 @@ module.exports = function () {
             return this.slice(-str.length) === str;
         };
     }
-
-    Date.prototype.toCustomString = function (separator) {
-        if (!separator) {
-            separator = '-';
-        }
-        return this.getUTCFullYear() + separator + (this.getUTCMonth() + 1) + separator + this.getUTCDate();
-    };
 };

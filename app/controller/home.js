@@ -1,6 +1,6 @@
-/*jshint esnext: true*/
+'use strict';
 
-const endpoints = require('../config/endpoints');
+var endpoints = require('../config/endpoints');
 
 module.exports = function (request, reply) {
     var currentHref = 'http://' + request.info.host + request.path;

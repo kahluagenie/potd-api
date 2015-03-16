@@ -1,107 +1,105 @@
-var goproController = require('../app/controller/gopro'),
-    nock = require('nock'),
-    assert = require('assert'),
-    fs = require('fs'),
-    enhancePrototypes = require('../app/config/extend-prototypes');
+'use strict';
+
+var nock = require('nock');
+var assert = require('assert');
+var fs = require('fs');
+var Sinon = require('sinon');
+var goproController = require('../app/controller/gopro');
+var enhancePrototypes = require('../app/config/extend-prototypes');
 
 var cache = require('../app/util/cache');
 
 enhancePrototypes();
 
-var mockHtmlFile, mockPhoto, goproUrl;
+var mockGoproResponseFile, mockPhoto;
 setupMocks();
 
 describe('gopro controller', function () {
-    var html;
+    var goproResponse;
+    var sandbox;
 
     before(function (done) {
-        fs.readFile(mockHtmlFile, function (err, mockHtml) {
+        fs.readFile(mockGoproResponseFile, 'utf8', function (err, mockResponse) {
             if (err) {
                 throw err;
             }
-            html = mockHtml;
+            goproResponse = mockResponse;
             done();
         });
     });
 
     beforeEach(function () {
         cache.clear();
+        sandbox = Sinon.sandbox.create();
+    });
+
+    afterEach(function () {
+        sandbox.restore();
     });
 
     it('should return correct photo on the first and subsequent calls', function (done) {
-        mockSuccessGoproCall(html);
+        Sinon.useFakeTimers(new Date(2015, 0, 25).getTime());
+        mockSuccessfulGoproCall(goproResponse);
         assertGoproControllerReturnsCorrectPhoto(function () {
             assertGoproControllerReturnsCorrectPhoto(done);
         });
     });
 
     it('should return correct photo with date param', function (done) {
-        var date = '2014-12-17';
-        mockSuccessGoproCall(html, date);
+        var date = '2015-01-25';
+        mockSuccessfulGoproCall(goproResponse);
         assertGoproControllerReturnsCorrectPhoto(done, date);
     });
 
     it('should return null when cache is empty and network call fails', function (done) {
-        mockFailGoproCall();
+        mockFailureGoproCall();
         assertGoproControllerReturnsNullOnFailedNetworkCall(done);
     });
 });
 
-function mockSuccessGoproCall(html, date) {
-    var parsedDate = date ? new Date(Date.parse(date)) : new Date();
-    var url = goproUrl + parsedDate.toCustomString('/');
-
-    nock(url)
-        .get('')
-        .reply(200, html);
+function mockSuccessfulGoproCall(response) {
+    nock('https://api.gopro.com')
+        .get('/v2/channels/feed/playlists/photo-of-the-day?platform=web')
+        .reply(200, response);
 }
 
-function mockFailGoproCall() {
-    var parsedDate = new Date();
-    var url = goproUrl + parsedDate.toCustomString('/');
-
-    nock(url)
-        .get('')
+function mockFailureGoproCall() {
+    nock('https://api.gopro.com')
+        .get('/v2/channels/feed/playlists/photo-of-the-day?platform=web')
         .reply(404);
 }
 
-function assertGoproControllerReturnsCorrectPhoto(done, date) {
+function assertGoproControllerReturnsCorrectPhoto(callback, date) {
     var request = {
         params: {
             date: date
         }
     };
 
-    goproController(request, function (photo) {
-        if (date) {
-            mockPhoto.source = goproUrl + date.replace(/-/g, '/');
-        } else {
-            mockPhoto.source = goproUrl + new Date().toCustomString('/');
-        }
-
+    goproController.getPicture(request, function (photo) {
         assert.deepEqual(photo, mockPhoto);
-        done();
+        callback();
     });
 }
 
-function assertGoproControllerReturnsNullOnFailedNetworkCall(done) {
+function assertGoproControllerReturnsNullOnFailedNetworkCall(callback) {
     var request = {
         params: {}
     };
 
-    goproController(request, function (error) {
+    goproController.getPicture(request, function (error) {
         assert.equal(error, 'Error retrieving the image from GoPro');
-        done();
+        callback();
     });
 }
 
 function setupMocks() {
-    mockHtmlFile = './test/resources/gopro-potd-2014-12-17.html';
-    goproUrl = 'https://gopro.com/photos/photo-of-the-day/';
+    mockGoproResponseFile = './test/resources/gopro-api-potd-response.json';
 
     mockPhoto = {
-        uri: 'http://cbcdn2.gp-static.com/uploads/photo_of_the_day/image/135179/full_height2x_G0027451.jpg',
-        title: 'Skydive over Bay of Acre Israel',
-        byline: 'by Yogev Kalmanovich'
+        uri: "https://thumbnails-01.gp-static.com/v1/thumbnails/mdeqgKeMZC-6TZFjvQbgbUdq8Pw=/1920x1080/channels-uploads/production/images/master/970/b2578-7603845.jpg",
+        title: "Splash",
+        byline: "by Thodoris Ermilios",
+        source: "https://gopro.com/channel/photo-of-the-day/splash/"
     };
 }
