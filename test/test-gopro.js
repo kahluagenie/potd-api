@@ -52,6 +52,12 @@ describe('gopro controller', function () {
         mockFailureGoproCall();
         assertGoproControllerReturnsNullOnFailedNetworkCall(done);
     });
+
+    it('should return latest available photo when date is too high', function (done) {
+        var date = '2015-01-28';
+        mockSuccessfulGoproCall(goproResponse);
+        assertGoproControllerReturnsCorrectPhoto(done, date);
+    });
 });
 
 function mockSuccessfulGoproCall(response) {

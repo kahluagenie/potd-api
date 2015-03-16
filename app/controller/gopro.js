@@ -41,13 +41,7 @@ function getPhoto(cacheKey, date, reply) {
                 var responseDate = new Date(Date.parse(photoItem.date));
 
                 if (DateUtil.toCustomUTCDateString(date) === DateUtil.toCustomUTCDateString(responseDate)) {
-                    var uri = photoItem.thumbnails.full.image;
-                    var title = photoItem.title;
-                    var byline = 'by ' + photoItem.author;
-
-                    photo = new Photo(uri, title, byline);
-                    photo.source = 'https://gopro.com/channel/photo-of-the-day/' + photoItem.permalink + '/';
-
+                    photo = buildPhoto(photoItem);
                     return true;
                 }
             });
@@ -56,10 +50,29 @@ function getPhoto(cacheKey, date, reply) {
                 cache.put(cacheKey, photo);
                 reply(photo);
             } else {
-                reply().code(404);
+                var responsePhoto = goproApiResponse.media[0];
+                var latestResponseDate = new Date(Date.parse(responsePhoto.date));
+
+                if (DateUtil.toCustomUTCDateString(date) > DateUtil.toCustomUTCDateString(latestResponseDate)) {
+                    photo = buildPhoto(responsePhoto);
+                    reply(photo);
+                } else {
+                    reply().code(404);
+                }
             }
         } else {
             reply('Error retrieving the image from GoPro', null);
         }
     });
+}
+
+function buildPhoto(responsePhoto) {
+    var photo = new Photo(
+        responsePhoto.thumbnails.full.image,
+        responsePhoto.title,
+        'by ' + responsePhoto.author
+    );
+    photo.source = 'https://gopro.com/channel/photo-of-the-day/' + responsePhoto.permalink + '/';
+
+    return photo;
 }
