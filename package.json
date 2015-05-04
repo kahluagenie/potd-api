@@ -1,6 +1,6 @@
 {
   "name": "potd-api",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -9,7 +9,6 @@
   "author": "Oleg Kalugin",
   "license": "MIT",
   "dependencies": {
-    "cheerio": "^0.19.0",
     "hapi": "^8.4.0",
     "lodash": "^3.8.0",
     "request": "^2.55.0"
