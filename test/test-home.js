@@ -1,8 +1,7 @@
 'use strict';
 
 var homeController = require('../app/controller/home');
-var assert = require('chai').assert;
-var expect = require('chai').expect;
+var should = require('chai').should();
 
 var mockRequest = {
     info: {
@@ -23,14 +22,16 @@ describe('home resource', function () {
 
 function assertHomeHasLinks(done) {
     homeController(mockRequest, function (response) {
-        assert(response.links, 'links must exist on home resource');
+        should.exist(response.links, 'links must exist on home resource');
         done();
     });
 }
 
 function assertHomeHasGoproLink(done) {
     homeController(mockRequest, function (response) {
-        expect(response.links).to.contain({rel: 'gopro', href: 'http://localhost/gopro'});
+        should.exist(response);
+        should.exist(response.links);
+        response.links.should.contain({rel: 'gopro', href: 'http://localhost/gopro'});
         done();
     });
 }
