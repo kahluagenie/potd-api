@@ -31,7 +31,7 @@ function assertHomeHasGoproLink(done) {
     homeController(mockRequest, function (response) {
         should.exist(response);
         should.exist(response.links);
-        response.links.should.contain({rel: 'gopro', href: 'http://localhost/gopro'});
+        response.links.should.include({rel: 'gopro', href: 'http://localhost/gopro'});
         done();
     });
 }

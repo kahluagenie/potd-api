@@ -8,3 +8,5 @@ addons:
 
 after_script:
   - cat coverage/lcov.info | codeclimate
+
+sudo: false
