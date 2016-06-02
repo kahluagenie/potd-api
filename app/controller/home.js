@@ -4,7 +4,7 @@ var Endpoints = require('../config/endpoints');
 
 module.exports = function (request, reply) {
     var currentHref = 'http://' + request.info.host + request.path;
-    currentHref = _.trimRight(currentHref, '/');
+    currentHref = _.trimEnd(currentHref, '/');
 
     reply({
         links: [{

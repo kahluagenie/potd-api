@@ -66,11 +66,24 @@ function getPhoto(cacheKey, date, reply) {
     });
 }
 
+/**
+ * 
+ * @param responsePhoto
+ * @param responsePhoto.author
+ * @param responsePhoto.thumbnails.full.image
+ * @param responsePhoto.title
+ * @param responsePhoto.permalink
+ * @returns {Photo}
+ */
 function buildPhoto(responsePhoto) {
+    var byline = '';
+    if (responsePhoto.author && responsePhoto.author !== 'null null') {
+        byline = 'by ' + responsePhoto.author;
+    }
     return new Photo(
         responsePhoto.thumbnails.full.image,
         responsePhoto.title,
-        'by ' + responsePhoto.author,
+        byline,
         'https://gopro.com/channel/photo-of-the-day/' + responsePhoto.permalink + '/'
     );
 }

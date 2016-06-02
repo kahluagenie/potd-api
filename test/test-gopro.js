@@ -8,7 +8,7 @@ var goproController = require('../app/controller/gopro');
 var cache = require('../app/util/cache');
 
 
-var mockGoproResponseFile, mockPhoto;
+var mockGoproResponseFile, expectedPhoto;
 setupMocks();
 
 describe('gopro controller', function () {
@@ -80,7 +80,7 @@ function assertGoproControllerReturnsCorrectPhoto(callback, date) {
     };
 
     goproController.getPicture(request, function (photo) {
-        assert.deepEqual(photo, mockPhoto);
+        assert.deepEqual(photo, expectedPhoto);
         callback();
     });
 }
@@ -99,7 +99,7 @@ function assertGoproControllerReturnsNullOnFailedNetworkCall(callback) {
 function setupMocks() {
     mockGoproResponseFile = './test/resources/gopro-api-potd-response.json';
 
-    mockPhoto = {
+    expectedPhoto = {
         uri: "https://thumbnails-01.gp-static.com/v1/thumbnails/mdeqgKeMZC-6TZFjvQbgbUdq8Pw=/1920x1080/channels-uploads/production/images/master/970/b2578-7603845.jpg",
         title: "Splash",
         byline: "by Thodoris Ermilios",
