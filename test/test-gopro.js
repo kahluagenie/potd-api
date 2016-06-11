@@ -52,6 +52,12 @@ describe('gopro controller', function () {
         mockSuccessfulGoproCall(goproResponse);
         assertGoproControllerReturnsCorrectPhoto(done, date);
     });
+
+    it('should return latest available photo when date is too high and date is single digit', function (done) {
+        let date = '2015-01-10';
+        mockSuccessfulGoproCall(require('./resources/gopro-api-response-modified.json'));
+        assertGoproControllerReturnsCorrectPhoto(done, date);
+    });
 });
 
 function mockSuccessfulGoproCall(response) {

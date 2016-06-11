@@ -10,16 +10,16 @@ describe('DateUtil', function () {
         let customString = DateUtil.toCustomUTCDateString(date);
 
         should.exist(customString);
-        customString.should.equal('2015-3-16');
+        customString.should.equal('2015-03-16');
         done();
     });
 
     it('Should return custom date string', function (done) {
-        var date = new Date(Date.parse('2015-03-16T20:00:00'));
-        var customString = DateUtil.toCustomUTCDateString(date);
+        let date = new Date(Date.parse('2015-03-09T20:00:00'));
+        let customString = DateUtil.toCustomUTCDateString(date);
 
         should.exist(customString);
-        customString.should.equal('2015-3-16');
+        customString.should.equal('2015-03-09');
         done();
     });
 });

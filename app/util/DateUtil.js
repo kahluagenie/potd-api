@@ -18,7 +18,9 @@ function _buildCustomDateString(year, month, date, separator) {
     if (!separator) {
         separator = '-';
     }
-    return year.toString().concat(separator).concat(month + 1).concat(separator).concat(date);
+    return year.toString().concat(separator)
+        .concat(_.padStart(month + 1, 2, '0')).concat(separator)
+        .concat(_.padStart(date, 2, '0'));
 }
 
 
