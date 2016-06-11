@@ -1,7 +1,7 @@
 'use strict';
 
-var endpoints = require('./endpoints');
-var Gopro = require('../controller/gopro');
+const endpoints = require('./endpoints');
+const Gopro = require('../controller/gopro');
 
 module.exports = [
     {

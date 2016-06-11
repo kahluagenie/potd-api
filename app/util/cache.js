@@ -1,6 +1,6 @@
 'use strict';
 
-var DateUtil = require('./DateUtil');
+const DateUtil = require('./DateUtil');
 
 /**
  * Cache for storing just two values:
@@ -8,7 +8,7 @@ var DateUtil = require('./DateUtil');
  * Those will be the majority of use cases.
  */
 
-var cache = {
+let cache = {
     today: new CacheEntry(),
     tomorrow: new CacheEntry()
 };
@@ -29,16 +29,16 @@ exports.get = function (key) {
 };
 
 exports.put = function (key, value) {
-    var date = new Date();
+    let date = new Date();
 
-    var today = DateUtil.toCustomDateString(date);
+    let today = DateUtil.toCustomDateString(date);
     if (key === today) {
         cache.today.date = key;
         cache.today.value = value;
     }
 
     date.setDate(date.getDate() + 1);
-    var tomorrow = DateUtil.toCustomDateString(date);
+    let tomorrow = DateUtil.toCustomDateString(date);
     if (key === tomorrow) {
         cache.tomorrow.date = key;
         cache.tomorrow.value = value;

@@ -1,9 +1,12 @@
 'use strict';
-var _ = require('lodash');
-var Endpoints = require('../config/endpoints');
+const Url = require('url');
+const _ = require('lodash');
+const Endpoints = require('../config/endpoints');
+
 
 module.exports = function (request, reply) {
-    var currentHref = 'http://' + request.info.host + request.path;
+    let currentHref = 'http://' + request.info.host + request.path;
+    console.log(request.info);
     currentHref = _.trimEnd(currentHref, '/');
 
     reply({

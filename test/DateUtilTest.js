@@ -1,13 +1,13 @@
 'use strict';
 
-var should = require('chai').should();
-var DateUtil = require('../app/util/DateUtil');
+const should = require('chai').should();
+const DateUtil = require('../app/util/DateUtil');
 
 
 describe('DateUtil', function () {
     it('Should return custom UTC date string', function (done) {
-        var date = new Date(Date.parse('2015-03-16T20:00:00'));
-        var customString = DateUtil.toCustomUTCDateString(date);
+        let date = new Date(Date.parse('2015-03-16T20:00:00'));
+        let customString = DateUtil.toCustomUTCDateString(date);
 
         should.exist(customString);
         customString.should.equal('2015-3-16');

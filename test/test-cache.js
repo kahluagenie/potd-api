@@ -1,15 +1,15 @@
 'use strict';
 
-var assert = require('assert');
-var DateUtil = require('../app/util/DateUtil');
+let assert = require('assert');
+let DateUtil = require('../app/util/DateUtil');
 
-var mockPhoto = {
+let mockPhoto = {
     uri: 'http://cbcdn2.gp-static.com/uploads/photo_of_the_day/image/135179/full_height2x_G0027451.jpg',
     title: 'Skydive over Bay of Acre Israel',
     byline: 'by Yogev Kalmanovich'
 };
 
-var cache = require('../app/util/cache');
+let cache = require('../app/util/cache');
 
 
 beforeEach(function () {
@@ -39,12 +39,12 @@ describe('cache', function () {
 });
 
 function assertCacheStoresTodayPhoto() {
-    var today = DateUtil.toCustomUTCDateString(new Date());
+    let today = DateUtil.toCustomUTCDateString(new Date());
     assertCacheStoresMockValue(today);
 }
 
 function assertCacheStoresMockValue(dateKey) {
-    var cacheValue = cache.get(dateKey);
+    let cacheValue = cache.get(dateKey);
     assert.equal(cacheValue, null);
 
     cache.put(dateKey, mockPhoto);
@@ -53,19 +53,19 @@ function assertCacheStoresMockValue(dateKey) {
 }
 
 function assertCacheStoresTomorrowsPhoto() {
-    var tomorrow = new Date();
+    let tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     assertCacheStoresMockValue(DateUtil.toCustomDateString(tomorrow));
 }
 
 function assertCacheDoesNotStoreYesterdaysPhoto() {
-    var yesterday = new Date();
+    let yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
     assertCacheDoesNotStoreMockValue(DateUtil.toCustomDateString(yesterday));
 }
 
 function assertCacheDoesNotStoreMockValue(dateKey) {
-    var cacheValue = cache.get(dateKey);
+    let cacheValue = cache.get(dateKey);
     assert.equal(cacheValue, null);
 
     cache.put(dateKey, mockPhoto);
@@ -74,10 +74,10 @@ function assertCacheDoesNotStoreMockValue(dateKey) {
 }
 
 function testCacheClear() {
-    var today = DateUtil.toCustomDateString(new Date());
+    let today = DateUtil.toCustomDateString(new Date());
     cache.put(today, mockPhoto);
 
     cache.clear();
-    var cacheValue = cache.get(today);
+    let cacheValue = cache.get(today);
     assert.equal(cacheValue, null);
 }

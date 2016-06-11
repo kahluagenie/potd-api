@@ -1,29 +1,23 @@
 'use strict';
 
-var nock = require('nock');
-var assert = require('assert');
-var fs = require('fs');
-var Sinon = require('sinon');
-var goproController = require('../app/controller/gopro');
-var cache = require('../app/util/cache');
+const nock = require('nock');
+const assert = require('assert');
+const Sinon = require('sinon');
+const goproController = require('../app/controller/gopro');
+const cache = require('../app/util/cache');
 
 
-var mockGoproResponseFile, expectedPhoto;
-setupMocks();
+const goproResponse = require('./resources/gopro-api-potd-response.json');
+
+const expectedPhoto = {
+    uri: "https://thumbnails-01.gp-static.com/v1/thumbnails/mdeqgKeMZC-6TZFjvQbgbUdq8Pw=/1920x1080/channels-uploads/production/images/master/970/b2578-7603845.jpg",
+    title: "Splash",
+    byline: "by Thodoris Ermilios",
+    source: "https://gopro.com/channel/photo-of-the-day/splash/"
+};
 
 describe('gopro controller', function () {
-    var goproResponse;
-    var sandbox;
-
-    before(function (done) {
-        fs.readFile(mockGoproResponseFile, 'utf8', function (err, mockResponse) {
-            if (err) {
-                throw err;
-            }
-            goproResponse = mockResponse;
-            done();
-        });
-    });
+    let sandbox;
 
     beforeEach(function () {
         cache.clear();
@@ -43,7 +37,7 @@ describe('gopro controller', function () {
     });
 
     it('should return correct photo with date param', function (done) {
-        var date = '2015-01-25';
+        let date = '2015-01-25';
         mockSuccessfulGoproCall(goproResponse);
         assertGoproControllerReturnsCorrectPhoto(done, date);
     });
@@ -54,7 +48,7 @@ describe('gopro controller', function () {
     });
 
     it('should return latest available photo when date is too high', function (done) {
-        var date = '2015-01-28';
+        let date = '2015-01-28';
         mockSuccessfulGoproCall(goproResponse);
         assertGoproControllerReturnsCorrectPhoto(done, date);
     });
@@ -73,7 +67,7 @@ function mockFailureGoproCall() {
 }
 
 function assertGoproControllerReturnsCorrectPhoto(callback, date) {
-    var request = {
+    let request = {
         params: {
             date: date
         }
@@ -86,7 +80,7 @@ function assertGoproControllerReturnsCorrectPhoto(callback, date) {
 }
 
 function assertGoproControllerReturnsNullOnFailedNetworkCall(callback) {
-    var request = {
+    let request = {
         params: {}
     };
 
@@ -94,15 +88,4 @@ function assertGoproControllerReturnsNullOnFailedNetworkCall(callback) {
         assert.equal(error, 'Error retrieving the image from GoPro');
         callback();
     });
-}
-
-function setupMocks() {
-    mockGoproResponseFile = './test/resources/gopro-api-potd-response.json';
-
-    expectedPhoto = {
-        uri: "https://thumbnails-01.gp-static.com/v1/thumbnails/mdeqgKeMZC-6TZFjvQbgbUdq8Pw=/1920x1080/channels-uploads/production/images/master/970/b2578-7603845.jpg",
-        title: "Splash",
-        byline: "by Thodoris Ermilios",
-        source: "https://gopro.com/channel/photo-of-the-day/splash/"
-    };
 }

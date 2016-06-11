@@ -1,9 +1,8 @@
 'use strict';
+const Hapi = require('hapi');
 
-var Hapi = require('hapi');
-
-var server = new Hapi.Server();
-var port = process.env.PORT || 8000;
+let server = new Hapi.Server();
+let port = process.env.PORT || 8000;
 server.connection({port: port});
 
 server.route(require('./app/config/routes'));

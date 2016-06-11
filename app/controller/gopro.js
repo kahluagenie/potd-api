@@ -1,24 +1,24 @@
 'use strict';
 
-var httpRequest = require('request');
-var Photo = require('../model/Photo');
-var cache = require('../util/cache');
-var DateUtil = require('../util/DateUtil');
+const httpRequest = require('request');
+const Photo = require('../model/Photo');
+const cache = require('../util/cache');
+const DateUtil = require('../util/DateUtil');
 
 exports.GOPRO_URL = 'https://api.gopro.com/v2/channels/feed/playlists/photo-of-the-day?platform=web';
 
 exports.getPicture = function (request, reply) {
-    var date;
+    let date;
 
     if (request.params.date) {
         date = new Date(Date.parse(decodeURIComponent(request.params.date)));
     } else {
-        var now = new Date();
+        let now = new Date();
         date = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
     }
 
-    var cacheKey = DateUtil.toCustomUTCDateString(date);
-    var cacheEntry = cache.get(cacheKey);
+    let cacheKey = DateUtil.toCustomUTCDateString(date);
+    let cacheEntry = cache.get(cacheKey);
 
     if (cacheEntry) {
         reply(cacheEntry);
@@ -34,11 +34,11 @@ function getPhoto(cacheKey, date, reply) {
         }
 
         if (response.statusCode === 200) {
-            var photo;
-            var goproApiResponse = JSON.parse(body);
+            let photo;
+            let goproApiResponse = JSON.parse(body);
 
             goproApiResponse.media.some(function (photoItem) {
-                var responseDate = new Date(Date.parse(photoItem.date));
+                let responseDate = new Date(Date.parse(photoItem.date));
 
                 if (DateUtil.toCustomUTCDateString(date) === DateUtil.toCustomUTCDateString(responseDate)) {
                     photo = buildPhoto(photoItem);
@@ -50,8 +50,8 @@ function getPhoto(cacheKey, date, reply) {
                 cache.put(cacheKey, photo);
                 reply(photo);
             } else {
-                var responsePhoto = goproApiResponse.media[0];
-                var latestResponseDate = new Date(Date.parse(responsePhoto.date));
+                let responsePhoto = goproApiResponse.media[0];
+                let latestResponseDate = new Date(Date.parse(responsePhoto.date));
 
                 if (DateUtil.toCustomUTCDateString(date) > DateUtil.toCustomUTCDateString(latestResponseDate)) {
                     photo = buildPhoto(responsePhoto);
@@ -76,7 +76,7 @@ function getPhoto(cacheKey, date, reply) {
  * @returns {Photo}
  */
 function buildPhoto(responsePhoto) {
-    var byline = '';
+    let byline = '';
     if (responsePhoto.author && responsePhoto.author !== 'null null') {
         byline = 'by ' + responsePhoto.author;
     }
