@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = {
+module.exports = Object.freeze({
     home: '/',
     gopro: '/gopro'
-};
+});

@@ -79,7 +79,7 @@ function assertGoproControllerReturnsCorrectPhoto(callback, date) {
         }
     };
 
-    goproController.getPicture(request, function (photo) {
+    goproController.getPictureInfo(request, function (photo) {
         assert.deepEqual(photo, expectedPhoto);
         callback();
     });
@@ -90,8 +90,8 @@ function assertGoproControllerReturnsNullOnFailedNetworkCall(callback) {
         params: {}
     };
 
-    goproController.getPicture(request, function (error) {
-        assert.equal(error, 'Error retrieving the image from GoPro');
+    goproController.getPictureInfo(request, function (error) {
+        assert.equal(error.message, 'Error retrieving the image from GoPro');
         callback();
     });
 }

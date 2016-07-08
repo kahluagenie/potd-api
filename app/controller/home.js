@@ -1,5 +1,4 @@
 'use strict';
-const Url = require('url');
 const _ = require('lodash');
 const Endpoints = require('../config/endpoints');
 

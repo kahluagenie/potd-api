@@ -12,6 +12,11 @@ module.exports = [
     {
         method: 'GET',
         path: endpoints.gopro + '/{date?}',
+        handler: Gopro.getPictureInfo
+    },
+    {
+        method: 'GET',
+        path: endpoints.gopro + '/{date}/image',
         handler: Gopro.getPicture
     }
 ];
