@@ -8,4 +8,6 @@
 
 An API that retrieves the current POTD from [GoPro website](https://gopro.com/channel/photo-of-the-day).
 
+Also supports direct latest image retrieval instead of JSON (useful for Gmail's custom background for example) - http://potd.olegkalugin.com/gopro/latest/image
+
 I might add more sources later.
